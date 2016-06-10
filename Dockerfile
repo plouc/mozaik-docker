@@ -1,11 +1,8 @@
 FROM node:0.12.7-slim
 
-RUN apt-get update \
-  && apt-get install unzip
+ADD https://github.com/plouc/mozaik-demo/archive/master.tar.gz /
 
-ADD https://github.com/plouc/mozaik-demo/archive/master.zip /
-
-RUN unzip master.zip
+RUN tar -zxf master.tar.gz
 
 WORKDIR /mozaik-demo-master
 
@@ -16,8 +13,7 @@ RUN npm install \
   && gulp build \
   && rm -rf node_modules \
   && npm install --no-optional --production \
-  && npm remove -g gulp \
-  && apt-get remove --purge -y unzip
+  && npm remove -g gulp
 
 EXPOSE 5000
 
